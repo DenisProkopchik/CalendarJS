@@ -1,10 +1,10 @@
-document.addEventListener("DOMContentLoaded", function ready () {
+document.addEventListener("DOMContentLoaded", function ready() {
 	let body = document.querySelector('body');
 	let dataWeather;
 	let heightWindow = document.documentElement.clientHeight;
-	let dayImg = 'https://farm4.staticflickr.com/3735/8775428119_af18975128_o.jpg';
-	let nightImg = 'https://c.wallhere.com/photos/c3/8a/Mozilla_Firefox_Mozilla_night_forest_landscape_horizon_minimalism_illustration-1390453.jpg!d';
-	
+	let dayImg = './image/day.jpg';
+	let nightImg = './image/night.jpg';
+
 	body.style.cssText = `
 		transition: background-image 0.3s;
 		margin: 0;
@@ -14,16 +14,16 @@ document.addEventListener("DOMContentLoaded", function ready () {
 		overflow: hidden;
 		height: ${heightWindow}px;
 	`;
-	body.insertAdjacentHTML('afterbegin', 
+	body.insertAdjacentHTML('afterbegin',
 		`<div class="wrapper">
 		 	<div class="time--line">
 		 	</div>
 		</div>`);
-	
+
 	let wrapper = document.querySelector('.wrapper');
 	let line = document.querySelector('.time--line');
-	let arrDaysOfTheWeek = ['понедельник','вторник','среда','четверг','пятница','суббота','воскресенье'];
-	let arrWordMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+	let arrDaysOfTheWeek = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье'];
+	let arrWordMonths = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 	let day;
 	let month;
 	let year;
@@ -34,15 +34,15 @@ document.addEventListener("DOMContentLoaded", function ready () {
 		display: flex;
 		justify-content: center;
 	`;
-	
-	function setDate () {
+
+	function setDate() {
 		day = checkLength(new Date().getDate());
 		month = new Date().getMonth();
 		year = checkLength(new Date().getFullYear());
 	}
 	setDate();
 
-	line.insertAdjacentHTML('afterbegin', 
+	line.insertAdjacentHTML('afterbegin',
 		`<div class="time--box" onselectstart="return false" onmousedown="return false">
 			<div class="time">
 				${checkLength(new Date().getHours())}:${checkLength(new Date().getMinutes())}
@@ -64,17 +64,17 @@ document.addEventListener("DOMContentLoaded", function ready () {
 		text-shadow: none;
 		color: #919191;
 	`;
-	
+
 	let timeOut;
 	let titleShow;
 
-	function dayOfTheWeek () {
-			let daySun = new Date().getDay() - 1;
-			daySun < 0 ? daySun = 6 : null;
-			return daySun;
+	function dayOfTheWeek() {
+		let daySun = new Date().getDay() - 1;
+		daySun < 0 ? daySun = 6 : null;
+		return daySun;
 	}
 
-	timeBox.onmouseover = function(event){
+	timeBox.onmouseover = function (event) {
 		this.style.cssText = `
 			transition: all 0.2s;
 			text-align: center;
@@ -83,10 +83,10 @@ document.addEventListener("DOMContentLoaded", function ready () {
 			color: #fff;
 			position: relative;
 		`;
-		
-		function title () {
-			timeBox.insertAdjacentHTML('afterend', 
-			`<div class="title--show">
+
+		function title() {
+			timeBox.insertAdjacentHTML('afterend',
+				`<div class="title--show">
 				<div>${Number(day)} ${arrWordMonths[month]} ${year} г.</div>
 			 	<div>${arrDaysOfTheWeek[dayOfTheWeek()]}</div>
 			</div>`);
@@ -101,12 +101,12 @@ document.addEventListener("DOMContentLoaded", function ready () {
 				border-radius: 4px;
 			`;
 		}
-		
+
 		let checkCalendar = document.getElementsByClassName('calendar--wrapper')[0];
-		checkCalendar ? clearTimeout(timeOut) : timeOut = setTimeout (title, 700);
+		checkCalendar ? clearTimeout(timeOut) : timeOut = setTimeout(title, 700);
 	};
 
-	timeBox.onmouseout = function(){
+	timeBox.onmouseout = function () {
 		this.style.cssText = `
 			transition: all 0.2s;
 			text-align: center;
@@ -116,35 +116,35 @@ document.addEventListener("DOMContentLoaded", function ready () {
 			position: relative;
 		`;
 		clearTimeout(timeOut);
-		titleShow ? titleShow.remove(): null;
+		titleShow ? titleShow.remove() : null;
 	}
 
-	function checkLength (num) {
+	function checkLength(num) {
 		String(num).length < 2 ? num = `0${num}` : null;
 		return num;
 	}
-	function showTime () {
+	function showTime() {
 		let time = document.querySelector('.time');
-		time.innerText=`${checkLength(new Date().getHours())}:${checkLength(new Date().getMinutes())}`;
+		time.innerText = `${checkLength(new Date().getHours())}:${checkLength(new Date().getMinutes())}`;
 	}
-	function showDate () {
+	function showDate() {
 		let date = document.querySelector('.date');
-		date.innerText=`${checkLength(new Date().getDate())}.${checkLength(new Date().getMonth() + 1)}.${new Date().getFullYear()}`;
+		date.innerText = `${checkLength(new Date().getDate())}.${checkLength(new Date().getMonth() + 1)}.${new Date().getFullYear()}`;
 	}
 	setInterval(showTime, 100);
 	setInterval(showDate, 100);
 
-	timeBox.addEventListener('click', function clickCalendar (event) {
-		titleShow ? titleShow.remove(): null;
+	timeBox.addEventListener('click', function clickCalendar(event) {
+		titleShow ? titleShow.remove() : null;
 		clearTimeout(timeOut);
 		let checkCalendar = document.getElementsByClassName('calendar--wrapper')[0];
-		if (checkCalendar){
+		if (checkCalendar) {
 			checkCalendar.remove();
 			month = new Date().getMonth();
 			year = checkLength(new Date().getFullYear());
 		} else {
-			line.insertAdjacentHTML('afterend', 
-			`<div class="calendar--wrapper" onselectstart="return false" onmousedown="return false">
+			line.insertAdjacentHTML('afterend',
+				`<div class="calendar--wrapper" onselectstart="return false" onmousedown="return false">
 				<div class="calendar--top">
 					<div>
 						<a href="" class="calendar--top--link">${Number(day)} ${arrWordMonths[month]} ${year} г.</a>
@@ -176,24 +176,24 @@ document.addEventListener("DOMContentLoaded", function ready () {
 					</div>
 				</div>
 			</div>`);
-		
-			function monthSlice (month) {
-				month === 'мая' ? month = `${month.slice(0, month.length - 1)}й`: month.slice(month.length - 1) === "я" ? month = `${month.slice(0, month.length - 1)}ь`: month = month.slice(0, month.length - 1);
-				return month.slice(0, 1).toUpperCase() + month.slice(1); 
+
+			function monthSlice(month) {
+				month === 'мая' ? month = `${month.slice(0, month.length - 1)}й` : month.slice(month.length - 1) === "я" ? month = `${month.slice(0, month.length - 1)}ь` : month = month.slice(0, month.length - 1);
+				return month.slice(0, 1).toUpperCase() + month.slice(1);
 			}
 
-			function showSeconds () {
+			function showSeconds() {
 				let seconds = document.querySelector('.calendar--bottom--time');
-				if(seconds){
+				if (seconds) {
 					let timeString = `${checkLength(new Date().getHours())}:${checkLength(new Date().getMinutes())}:${checkLength(new Date().getSeconds())}`;
 					seconds.innerText = timeString;
-					if((timeString === `00:00:00`) && (new Date().getMilliseconds() < 10)) {
+					if ((timeString === `00:00:00`) && (new Date().getMilliseconds() < 10)) {
 						setDate();
-						if(document.getElementsByClassName('calendar--wrapper')[0]){
+						if (document.getElementsByClassName('calendar--wrapper')[0]) {
 							document.getElementsByClassName('calendar--wrapper')[0].remove();
 							clickCalendar();
 						}
-					} 
+					}
 				}
 			}
 
@@ -279,8 +279,8 @@ document.addEventListener("DOMContentLoaded", function ready () {
 					`;
 				};
 			});
-			
-			function makeLoad () {
+
+			function makeLoad() {
 				calendarTopWeather.insertAdjacentHTML('beforeend',
 					`<div class="loader-1"></div>`);
 
@@ -288,9 +288,9 @@ document.addEventListener("DOMContentLoaded", function ready () {
 
 			let dobleArr;
 			let firstString;
-			let lastString; 
-			
-			function makeStyles1 (itm) {
+			let lastString;
+
+			function makeStyles1(itm) {
 				itm.style.cssText = `
 					border: 1px dotted #430fff;
 					text-align: center;
@@ -299,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function ready () {
 					background-color: rgba(67, 15, 255, 0.1);
 				`;
 			}
-			function makeStyles2 (itm) {
+			function makeStyles2(itm) {
 				itm.style.cssText = `
 					color: #430fff;
 					border: 1px solid #430fff;
@@ -308,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function ready () {
 					cursor: default;
 				`;
 			}
-			function makeStyles3 (itm) {
+			function makeStyles3(itm) {
 				itm.style.cssText = `
 					color:#000;
 					cursor: default;
@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded", function ready () {
 					border-radius: 3px;
 				`;
 			}
-			function makeStyles4 (itm) {
+			function makeStyles4(itm) {
 				itm.style.cssText = `
 					color:#429dff;
 					cursor: default;
@@ -327,10 +327,10 @@ document.addEventListener("DOMContentLoaded", function ready () {
 				`;
 			}
 
-			makeCalendar();			
-			function makeCalendar (){
+			makeCalendar();
+			function makeCalendar() {
 				calendarCenterMonths = document.getElementsByClassName('calendar--center--months')[0];
-				
+
 				calendarCenterTable ? calendarCenterTable.remove() : null;
 				calendarCenter.insertAdjacentHTML('beforeend', `
 					<table class="calendar--center--table">
@@ -338,13 +338,13 @@ document.addEventListener("DOMContentLoaded", function ready () {
 				`);
 				calendarCenterTable = document.getElementsByClassName('calendar--center--table')[0];
 
-				Date.prototype.daysInMonth = function(m) {
-					return 33 - new Date(year,  m, 33).getDate();
-					};
-					
-				let firstDayOnTheWeek = new Date(year,  month, 1).getDay();
+				Date.prototype.daysInMonth = function (m) {
+					return 33 - new Date(year, m, 33).getDate();
+				};
+
+				let firstDayOnTheWeek = new Date(year, month, 1).getDay();
 				let sumDays = new Date().daysInMonth(month);
-					
+
 				calendarCenterDate.style.cssText = `
 					width: 65%;
 					display: flex;
@@ -354,9 +354,9 @@ document.addEventListener("DOMContentLoaded", function ready () {
 				calendarCenterTable.style.cssText = `
 					width: 70%;
 				`;
-							
-				for(let i = 1; i <= 8; i++){
-					calendarCenterTable.insertAdjacentHTML('beforeend', 
+
+				for (let i = 1; i <= 8; i++) {
+					calendarCenterTable.insertAdjacentHTML('beforeend',
 						`<tr class="calendar--table--rows" id="calendar--table--row${i}">
 							<td class="row${i}--columns" id="row${i}Column1"></td>
 							<td class="row${i}--columns" id="row${i}Column2"></td>
@@ -367,8 +367,8 @@ document.addEventListener("DOMContentLoaded", function ready () {
 							<td class="row${i}--columns" id="row${i}Column7"></td>
 						</tr>`);
 				}
-						
-				let arrDaysLittle = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"]
+
+				let arrDaysLittle = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
 				let row1 = [...document.querySelectorAll('.row1--columns')];
 				row1.forEach((item, index) => {
 					item.innerHTML = arrDaysLittle[index];
@@ -379,16 +379,16 @@ document.addEventListener("DOMContentLoaded", function ready () {
 						cursor: default;
 					`;
 				});
-			
+
 				let bigArrColumns = [];
-					
-				for(let i = 2; i <= 8; i++){
+
+				for (let i = 2; i <= 8; i++) {
 					[...document.querySelectorAll(`.row${i}--columns`)].forEach(item => bigArrColumns.push(item));
 				}
 
 				dobleArr = bigArrColumns;
-								
-				let sumDaysLast = new Date().daysInMonth(month-1);
+
+				let sumDaysLast = new Date().daysInMonth(month - 1);
 				let sunday = firstDayOnTheWeek - 1;
 				sunday < 0 ? sunday = sunday + 7 : null;
 
@@ -398,32 +398,32 @@ document.addEventListener("DOMContentLoaded", function ready () {
 						makeStyles4(item);
 					};
 					item.onmouseout = function () {
-						makeStyles3 (item);
-						if(item.classList.contains('highlightDay')) {
+						makeStyles3(item);
+						if (item.classList.contains('highlightDay')) {
 							makeStyles1(item);
 						}
 					};
-					item.addEventListener("click", function clickOnDay (){
-						function eventCkick(){
+					item.addEventListener("click", function clickOnDay() {
+						function eventCkick() {
 							let highlightDay = document.getElementsByClassName('highlightDay')[0];
-							if(highlightDay){
-								makeStyles3 (highlightDay);
-								highlightDay.style.backgroundColor =`transparent`;
+							if (highlightDay) {
+								makeStyles3(highlightDay);
+								highlightDay.style.backgroundColor = `transparent`;
 								highlightDay.classList.remove('highlightDay');
-							} 
-							if(item.classList.contains('now--day')){
+							}
+							if (item.classList.contains('now--day')) {
 								makeStyles1(item);
 								item.style.color = '#fff';
-								item.onmouseout = function(){
+								item.onmouseout = function () {
 									makeStyles1(item);
 									item.style.color = '#fff';
 								};
 							} else {
 								let nowDayhigh = document.getElementsByClassName('now--day')[0];
-								if(nowDayhigh){
+								if (nowDayhigh) {
 									makeStyles2(nowDayhigh);
 									nowDayhigh.style.backgroundColor = `transparent`;
-									document.getElementsByClassName('now--day')[0].onmouseout = function(){
+									document.getElementsByClassName('now--day')[0].onmouseout = function () {
 										return makeStyles2(this);
 									};
 								}
@@ -432,25 +432,25 @@ document.addEventListener("DOMContentLoaded", function ready () {
 								makeStyles1(highlightDay);
 							}
 						}
-						if(index < firstBlock){
+						if (index < firstBlock) {
 							clickMinus();
 							let i = index;
 							i > 6 ? i = i - 7 : null;
 							lastString[i].classList.add('highlightDay');
 							highlightDay = document.getElementsByClassName('highlightDay')[0];
 							makeStyles1(highlightDay);
-							highlightDay.onmouseout = function(){
+							highlightDay.onmouseout = function () {
 								lastString[i].classList.contains('highlightDay') ? makeStyles1(this) : makeStyles3(this);
 							};
 						} else if (index > lastBlock) {
 							document.getElementById(`calendar--table--row8`) ? lastString = [...document.querySelectorAll(`.row8--columns`)] : lastString = [...document.querySelectorAll(`.row7--columns`)];
 							let i = lastString.findIndex(item2 => item === item2);
 							clickPlus();
-							i > 6 ? i = i - 7  : null;
+							i > 6 ? i = i - 7 : null;
 							firstString[i].classList.add('highlightDay');
 							highlightDay = document.getElementsByClassName('highlightDay')[0];
 							makeStyles1(highlightDay);
-							highlightDay.onmouseout = function(){
+							highlightDay.onmouseout = function () {
 								firstString[i].classList.contains('highlightDay') ? makeStyles1(this) : makeStyles3(this);
 							};
 						} else {
@@ -458,56 +458,56 @@ document.addEventListener("DOMContentLoaded", function ready () {
 						}
 					});
 				});
-			
+
 				let firstBlock = 0;
 				let lastBlock = 0;
-				for(let i = 1 ; i <= sumDays; i++){
+				for (let i = 1; i <= sumDays; i++) {
 					let start = firstDayOnTheWeek + i + 5;
 					i === 1 ? firstBlock = start : i === sumDays ? lastBlock = start : null;
-					if(`${year},${month},${i}` === `${new Date().getFullYear()},${new Date().getMonth()},${new Date().getDate()}`){
+					if (`${year},${month},${i}` === `${new Date().getFullYear()},${new Date().getMonth()},${new Date().getDate()}`) {
 
-						function highlightDay (item) {
+						function highlightDay(item) {
 							makeStyles2(item);
 							item.classList.add('now--day');
 						}
-							
-						highlightDay (bigArrColumns[start]);
-						bigArrColumns[start].onmouseout = function(){
-							highlightDay (bigArrColumns[start]);
+
+						highlightDay(bigArrColumns[start]);
+						bigArrColumns[start].onmouseout = function () {
+							highlightDay(bigArrColumns[start]);
 						};
 					}
 					bigArrColumns[start].innerHTML = i;
 				}
 
-				for(let i = 0 ; i < sunday; i++){
+				for (let i = 0; i < sunday; i++) {
 					let end = firstBlock - i - 1;
 					bigArrColumns[end].innerHTML = sumDaysLast - i;
 					bigArrColumns[end].style.opacity = "0.5";
-					bigArrColumns[end].onmouseout = function(){
-						makeStyles3 (this);
+					bigArrColumns[end].onmouseout = function () {
+						makeStyles3(this);
 						this.style.opacity = `0.5`;
 					};
 				}
 				let afterDays;
-				for(let i = 1; bigArrColumns.length - 1 !== afterDays; i++){
+				for (let i = 1; bigArrColumns.length - 1 !== afterDays; i++) {
 					afterDays = lastBlock + i;
 					bigArrColumns[afterDays].innerHTML = i;
 					bigArrColumns[afterDays].style.opacity = "0.5";
-					bigArrColumns[afterDays].onmouseout = function(){
-						makeStyles3 (this);
+					bigArrColumns[afterDays].onmouseout = function () {
+						makeStyles3(this);
 						this.style.opacity = `0.5`;
 					};
 				}
 				firstBlock > 6 ? document.getElementById('calendar--table--row2').remove() : null;
-				lastBlock < 42 ? document.getElementById(`calendar--table--row8`).remove() : null; 
+				lastBlock < 42 ? document.getElementById(`calendar--table--row8`).remove() : null;
 			}
-			function clickMinus () {
-				if(calendarCenterMonths){
+			function clickMinus() {
+				if (calendarCenterMonths) {
 					year = --year;
 					clickOnMonthYear();
 				} else {
 					month = --month;
-					if(month < 0){
+					if (month < 0) {
 						year = --year;
 						month = 11;
 					}
@@ -516,22 +516,22 @@ document.addEventListener("DOMContentLoaded", function ready () {
 					calendarMonthYear.innerHTML = `${monthSlice(arrWordMonths[month])} ${year}`;
 				}
 			}
-			function clickPlus () {
-				if(calendarCenterMonths){
+			function clickPlus() {
+				if (calendarCenterMonths) {
 					year = ++year;
 					clickOnMonthYear();
 				} else {
 					month = ++month;
-					if(month > 11){
+					if (month > 11) {
 						year = ++year;
 						month = 0;
 					}
 					makeCalendar();
 					document.getElementById(`calendar--table--row2`) ? firstString = [...document.querySelectorAll(`.row2--columns`)] : firstString = [...document.querySelectorAll(`.row3--columns`)];
 					calendarMonthYear.innerHTML = `${monthSlice(arrWordMonths[month])} ${year}`;
-				} 
+				}
 			}
-			function clickOnMonthYear () {
+			function clickOnMonthYear() {
 				calendarCenterTable.remove();
 				calendarCenterMonths ? calendarCenterMonths.remove() : null;
 				calendarCenter.insertAdjacentHTML('beforeend', `
@@ -542,9 +542,9 @@ document.addEventListener("DOMContentLoaded", function ready () {
 				calendarCenterMonths.style.cssText = `
 					text-align: center;
 				`;
-								
-				for(let i = 1; i <= 3; i++){
-					calendarCenterMonths.insertAdjacentHTML('beforeend', 
+
+				for (let i = 1; i <= 3; i++) {
+					calendarCenterMonths.insertAdjacentHTML('beforeend',
 						`<tr class="calendar--month--rows" id="calendar--month--row${i}">
 							<td class="month--row${i}--columns" id="month--row${i}Column1"></td>
 							<td class="month--row${i}--columns" id="month--row${i}Column2"></td>
@@ -555,8 +555,8 @@ document.addEventListener("DOMContentLoaded", function ready () {
 
 				let bigArrMonths = [];
 
-				for(let i = 1; i <= 3; i++){
-					[...document.querySelectorAll(`.month--row${i}--columns`)].forEach(item => bigArrMonths.push(item));					
+				for (let i = 1; i <= 3; i++) {
+					[...document.querySelectorAll(`.month--row${i}--columns`)].forEach(item => bigArrMonths.push(item));
 				}
 				bigArrMonths.forEach((item, index) => {
 					item.innerHTML = `${monthSlice(arrWordMonths[index])}`;
@@ -570,7 +570,7 @@ document.addEventListener("DOMContentLoaded", function ready () {
 						makeStyles3(item);
 						item.style.padding = `5px`;
 					};
-					if(index === new Date().getMonth() && year === new Date().getFullYear()){
+					if (index === new Date().getMonth() && year === new Date().getFullYear()) {
 						makeStyles2(item);
 						item.style.padding = `5px`;
 
@@ -579,27 +579,27 @@ document.addEventListener("DOMContentLoaded", function ready () {
 							item.style.padding = `5px`;
 						}
 					}
-					item.addEventListener("click", function clickOnMonth (){
-							month = index;		
-							calendarMonthYear.innerHTML = `${monthSlice(arrWordMonths[month])} ${year}`;
-							calendarCenterMonths.remove();
-							makeCalendar();
+					item.addEventListener("click", function clickOnMonth() {
+						month = index;
+						calendarMonthYear.innerHTML = `${monthSlice(arrWordMonths[month])} ${year}`;
+						calendarCenterMonths.remove();
+						makeCalendar();
 					});
 				});
-					
+
 				calendarMonthYear.innerHTML = year;
 			}
-			
-			calendarLeftRow.addEventListener("click", function clickLeft (){
+
+			calendarLeftRow.addEventListener("click", function clickLeft() {
 				return clickMinus();
 			});
-			calendarRightRow.addEventListener("click", function clickRight (){
+			calendarRightRow.addEventListener("click", function clickRight() {
 				return clickPlus();
 			});
-			calendarMonthYear.addEventListener("click", function clickCenter (){
+			calendarMonthYear.addEventListener("click", function clickCenter() {
 				return clickOnMonthYear();
 			});
-			calendarTopLink.addEventListener("click", function clickOnLinkTop (event){
+			calendarTopLink.addEventListener("click", function clickOnLinkTop(event) {
 				month = new Date().getMonth();
 				year = new Date().getFullYear();
 				calendarCenterMonths ? calendarCenterMonths.remove() : null;
@@ -608,11 +608,11 @@ document.addEventListener("DOMContentLoaded", function ready () {
 				getWeather();
 				event.preventDefault();
 			});
-			function getWeather (argument) {
-				return (async function showWeather () {
+			function getWeather(argument) {
+				return (async function showWeather() {
 					try {
-						await getData(); 
-						
+						await getData();
+
 						let main = dataWeather.main;
 						let weather = dataWeather.weather[0];
 						let icon = `http://openweathermap.org/img/wn/${weather.icon}@2x.png`
@@ -645,48 +645,48 @@ document.addEventListener("DOMContentLoaded", function ready () {
 						textWeather.style.cssText = `
 							font-size: 18px;
 						`;
-					} catch(e) {
+					} catch (e) {
 						console.log(e);
 					}
-				})(); 
+				})();
 			}
 			getWeather();
 		}
 	});
-	
-	async function findIpUser () {
+
+	async function findIpUser() {
 		try {
 			const response = await fetch(`http://ipwhois.app/json/`);
 			const data = await response.json();
 			return data;
-		} catch(e) {
+		} catch (e) {
 			console.error(e);
 		}
 	}
-	
-	function getData () {
-		 return (async function ()  {
-		 	try{
-		 		if(document.getElementsByClassName('center--weather--left')[0]){
+
+	function getData() {
+		return (async function () {
+			try {
+				if (document.getElementsByClassName('center--weather--left')[0]) {
 					document.getElementsByClassName('center--weather--left')[0].remove();
 					document.getElementsByClassName('center--weather--right')[0].remove();
 				}
-		 		let result = await findIpUser();
+				let result = await findIpUser();
 				let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${result.city},${result.country_code}&appid=8a0a00bf5076e76c43dbca5ec079c9df&units=metric`);
 				const data = await response.json();
 				let sys = data.sys;
-				let sunrise = new Date(sys.sunrise*1000);
-				let sunset = new Date(sys.sunset*1000);
-				if(sunrise.getHours() > new Date().getHours() || sunset.getHours() < new Date().getHours()){
+				let sunrise = new Date(sys.sunrise * 1000);
+				let sunset = new Date(sys.sunset * 1000);
+				if (sunrise.getHours() > new Date().getHours() || sunset.getHours() < new Date().getHours()) {
 					body.style.backgroundImage = `url(${nightImg})`;
-				} else if (sunrise.getHours() === new Date().getHours()){
-					if(sunrise.getMinutes() > new Date().getMinutes()){
+				} else if (sunrise.getHours() === new Date().getHours()) {
+					if (sunrise.getMinutes() > new Date().getMinutes()) {
 						body.style.backgroundImage = `url(${nightImg})`;
 					} else {
 						body.style.backgroundImage = `url(${dayImg})`;
 					}
-				} else if(sunset.getHours() === new Date().getHours()){
-					if(sunset.getMinutes() < new Date().getMinutes()){
+				} else if (sunset.getHours() === new Date().getHours()) {
+					if (sunset.getMinutes() < new Date().getMinutes()) {
 						body.style.backgroundImage = `url(${nightImg})`;
 					} else {
 						body.style.backgroundImage = `url(${dayImg})`;
@@ -695,8 +695,8 @@ document.addEventListener("DOMContentLoaded", function ready () {
 					body.style.backgroundImage = `url(${dayImg})`;
 				}
 				dataWeather = data;
-		 	}	catch(e) {
-			console.error(e);
+			} catch (e) {
+				console.error(e);
 			}
 		})();
 	}
