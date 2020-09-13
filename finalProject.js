@@ -656,7 +656,7 @@ document.addEventListener("DOMContentLoaded", function ready() {
 
 	async function findIpUser() {
 		try {
-			const response = await fetch(`http://ipwhois.app/json/`);
+			const response = await fetch(`https://ipwhois.app/json/`);
 			const data = await response.json();
 			return data;
 		} catch (e) {
