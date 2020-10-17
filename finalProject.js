@@ -44,6 +44,9 @@ document.addEventListener("DOMContentLoaded", function ready() {
 
 	line.insertAdjacentHTML('afterbegin',
 		`<div class="time--box" onselectstart="return false" onmousedown="return false">
+			<div>
+				Click on me!
+			</div>
 			<div class="time">
 				${checkLength(new Date().getHours())}:${checkLength(new Date().getMinutes())}
 			</div>
