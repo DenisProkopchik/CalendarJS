@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function ready() {
 		padding: 0;
 		background-image:	url(${dayImg});
 		background-size: cover;
+		background-position: center center;
 		overflow: hidden;
 		height: ${heightWindow}px;
 	`;
