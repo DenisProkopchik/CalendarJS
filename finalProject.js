@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", function ready() {
 		margin: 0;
 		padding: 0;
 		background-image:	url(${dayImg});
-		background-size: 100% 100%;
+		background-size: cover;
+		background-position: center center;
 		overflow: hidden;
 		height: ${heightWindow}px;
 	`;
@@ -98,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function ready() {
 			titleShow.style.cssText = `
 				position: absolute;
 				background-color: rgba(255, 255, 255, 0.4);
-				top: 60px;
+				top: 80px;
 				left: ${left}px;
 				padding: 5px;
 				border-radius: 4px;
