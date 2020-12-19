@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function ready() {
 		margin: 0;
 		padding: 0;
 		background-image:	url(${dayImg});
-		background-size: 100% 100%;
+		background-size: cover;
 		overflow: hidden;
 		height: ${heightWindow}px;
 	`;
